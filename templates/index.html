@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPR 388- Line Following Smart Robot</title>
+ <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
+</head>
+<body>
+  <mark><b>IPR - 388</b></mark><br>
+  <p style="font-size:32px"></p><br>
+  <mark><b><i>Line Following Smart Robot</i></b></mark>
+  <p style="font-size:30px"></p><br>
+
+  <hr style="background-color:red; height:23px">
+  <hr style="background-color:orange; height:15px">
+  <hr style="background-color:yellow; height:10px">
+
+  <div class="text">Choose any of the following</div>
+  <hr style="color:#4511f8; height:10px">
+
+  <div class="buttons">
+    <button onclick="fetch('/run_line_following_robot')">Straight Line Following Robot</button>
+    <button onclick="fetch('/run_curve_line_following_robot')">Curve Line Following Robot</button>
+    <button onclick="fetch('/run_obstacle_playaround')">Obstacle Playaround</button>
+    <!button onclick="fetch('/run_line_following_with_obstacle_detection')"Line Following with Obstacle Detection</button>
+  </div>
+  
+    <div class="text">WIFI control</div>
+ 
+  
+  <div class="container">
+    <div class="arrow up" onclick="controlCar('forward')">&#10132;</div>
+    <div class="arrow-container">
+      <div class="arrow left" onclick="controlCar('left')">&#10132;</div>
+      <div class="stop" onclick="controlCar('stop')">STOP</div>
+      <div class="arrow right" onclick="controlCar('right')">&#10132;</div>
+    </div>
+    <div class="arrow down" onclick="controlCar('backward')">&#10140;</div>
+  </div>
+
+  <script>
+    function controlCar(direction) {
+      fetch('/control', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ direction: direction }),
+      }).then(response => {
+        if (!response.ok) {
+          alert('Error: ' + response.statusText);
+        }
+      }).catch(error => {
+        alert('Request failed: ' + error.message);
+      });
+    }
+
+    function runLineFollowingRobot() {
+      fetch('/run_line_following_robot')
+        .then(response => response.ok ? alert("Line Following Robot code is running") : alert("Error: " + response.statusText))
+        .catch(error => alert("Request failed: " + error.message));
+    }
+
+    function runCurveLineFollowingRobot() {
+      fetch('/run_curve_line_following_robot')
+        .then(response => response.ok ? alert("Curve Line Following Robot code is running") : alert("Error: " + response.statusText))
+        .catch(error => alert("Request failed: " + error.message));
+    }
+
+    function runObstaclePlayaround() {
+      fetch('/run_obstacle_playaround')
+        .then(response => response.ok ? alert("Obstacle Playaround code is running") : alert("Error: " + response.statusText))
+        .catch(error => alert("Request failed: " + error.message));
+    }
+
+    function runLineFollowingWithObstacleDetection() {
+      fetch('/run_line_following_with_obstacle_detection')
+        .then(response => response.ok ? alert("Line Following with Obstacle Detection code is running") : alert("Error: " + response.statusText))
+        .catch(error => alert("Request failed: " + error.message));
+    }
+  </script>
+</html>
